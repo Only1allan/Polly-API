@@ -1,0 +1,55 @@
+# REST Client Test File for User Registration
+# This file uses the REST Client extension (humao.rest-client)
+
+### Variables
+@baseUrl = http://localhost:8000
+@contentType = application/json
+
+### Test 1: Register a new user
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{
+  "username": "john_doe",
+  "password": "secure_password123"
+}
+
+### Test 2: Try to register the same user again (should fail with 400)
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{
+  "username": "john_doe",
+  "password": "secure_password123"
+}
+
+### Test 3: Register another user with different credentials
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{
+  "username": "jane_smith",
+  "password": "another_password456"
+}
+
+### Test 4: Invalid request - missing password (should fail)
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{
+  "username": "invalid_user"
+}
+
+### Test 5: Invalid request - missing username (should fail)
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{
+  "password": "some_password"
+}
+
+### Test 6: Empty request body (should fail)
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{}

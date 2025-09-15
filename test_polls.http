@@ -1,0 +1,45 @@
+# REST Client Test File for Polls Endpoint
+# This file uses the REST Client extension (humao.rest-client)
+
+### Variables
+@baseUrl = http://localhost:8000
+
+### Test 1: Get first 10 polls (default pagination)
+GET {{baseUrl}}/polls
+Accept: application/json
+
+### Test 2: Get first 5 polls with explicit parameters
+GET {{baseUrl}}/polls?skip=0&limit=5
+Accept: application/json
+
+### Test 3: Get next 5 polls (skip first 5)
+GET {{baseUrl}}/polls?skip=5&limit=5
+Accept: application/json
+
+### Test 4: Get polls with larger page size
+GET {{baseUrl}}/polls?skip=0&limit=20
+Accept: application/json
+
+### Test 5: Get polls from middle page
+GET {{baseUrl}}/polls?skip=10&limit=10
+Accept: application/json
+
+### Test 6: Test with skip=0, limit=1 (minimal response)
+GET {{baseUrl}}/polls?skip=0&limit=1
+Accept: application/json
+
+### Test 7: Test with high skip value (should return empty if no polls)
+GET {{baseUrl}}/polls?skip=1000&limit=10
+Accept: application/json
+
+### Test 8: Test without any parameters (should use defaults)
+GET {{baseUrl}}/polls
+Accept: application/json
+
+### Test 9: Test with limit=0 (edge case)
+GET {{baseUrl}}/polls?skip=0&limit=0
+Accept: application/json
+
+### Test 10: Test with negative values (edge case)
+GET {{baseUrl}}/polls?skip=-1&limit=-1
+Accept: application/json

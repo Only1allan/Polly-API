@@ -1,0 +1,238 @@
+{
+  "info": {
+    "name": "Polly-API Polls Pagination Tests",
+    "description": "Collection to test polls endpoint with various pagination parameters",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Get First 10 Polls (Default)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/polls",
+          "host": ["{{baseUrl}}"],
+          "path": ["polls"]
+        },
+        "description": "Get polls with default pagination (no parameters specified)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get First 5 Polls",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/polls?skip=0&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["polls"],
+          "query": [
+            {
+              "key": "skip",
+              "value": "0"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Get first 5 polls with explicit pagination parameters"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Next 5 Polls (Skip First 5)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/polls?skip=5&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["polls"],
+          "query": [
+            {
+              "key": "skip",
+              "value": "5"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Get polls 6-10 by skipping the first 5"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Large Page (20 Polls)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/polls?skip=0&limit=20",
+          "host": ["{{baseUrl}}"],
+          "path": ["polls"],
+          "query": [
+            {
+              "key": "skip",
+              "value": "0"
+            },
+            {
+              "key": "limit",
+              "value": "20"
+            }
+          ]
+        },
+        "description": "Get first 20 polls with larger page size"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Middle Page (Skip 10)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/polls?skip=10&limit=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["polls"],
+          "query": [
+            {
+              "key": "skip",
+              "value": "10"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "Get polls 11-20 by skipping first 10"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single Poll (Minimal Response)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/polls?skip=0&limit=1",
+          "host": ["{{baseUrl}}"],
+          "path": ["polls"],
+          "query": [
+            {
+              "key": "skip",
+              "value": "0"
+            },
+            {
+              "key": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "description": "Get only the first poll for minimal response testing"
+      },
+      "response": []
+    },
+    {
+      "name": "Test High Skip Value",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/polls?skip=1000&limit=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["polls"],
+          "query": [
+            {
+              "key": "skip",
+              "value": "1000"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "Test with very high skip value (should return empty array if no polls)"
+      },
+      "response": []
+    },
+    {
+      "name": "Test Zero Limit (Edge Case)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/polls?skip=0&limit=0",
+          "host": ["{{baseUrl}}"],
+          "path": ["polls"],
+          "query": [
+            {
+              "key": "skip",
+              "value": "0"
+            },
+            {
+              "key": "limit",
+              "value": "0"
+            }
+          ]
+        },
+        "description": "Test edge case with limit=0 (should return empty array)"
+      },
+      "response": []
+    }
+  ]
+}
